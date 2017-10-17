@@ -18,6 +18,7 @@ Writing user simulation scripts
 -------------------------------
   - Write a class that extends [InteractionScript](https://github.com/webis-de/webis-web-archiver/blob/master/src/de/webis/webarchive/environment/scripts/InteractionScript.java).
   - You can use the [ScrollDownScript](https://github.com/webis-de/webis-web-archiver/blob/master/src/de/webis/webarchive/environment/scripts/ScrollDownScript.java) as an example, or extend it.
+  - The utility class [Windows](https://github.com/webis-de/webis-web-archiver/blob/master/src/de/webis/webarchive/environment/browsers/Windows.java) offers static helper methods for frequently used interactions.
   - Compile your script with the [binaries](https://github.com/webis-de/webis-web-archiver/releases/download/0.1.0/webis-web-archiver.jar) in the class path and create a JAR from it.
   - Place the JAR into a directory named "scriptname-1.0.0", where you replace "scriptname" by the name of your script.
   - Create a file "script.conf" with the following content and put it into the same directory
