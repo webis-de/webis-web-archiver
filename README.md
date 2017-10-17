@@ -14,8 +14,8 @@ The scripts will automatically download and run the image (2GB+ due to all the f
 
 For other OSes, have a look at the shell scripts and adjust the call to docker run accordingly.
 
-Writing user simulation scripts
--------------------------------
+Custom user simulation scripts
+------------------------------
   - Write a class that extends [InteractionScript](https://github.com/webis-de/webis-web-archiver/blob/master/src/de/webis/webarchive/environment/scripts/InteractionScript.java).
   - You can use the [ScrollDownScript](https://github.com/webis-de/webis-web-archiver/blob/master/src/de/webis/webarchive/environment/scripts/ScrollDownScript.java) as an example, or extend it.
   - The utility class [Windows](https://github.com/webis-de/webis-web-archiver/blob/master/src/de/webis/webarchive/environment/browsers/Windows.java) offers static helper methods for frequently used interactions.
