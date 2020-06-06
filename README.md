@@ -1,6 +1,8 @@
 webis-web-archiver
 ==================
-Source code and scripts for the Webis Web Archiver
+Source code and scripts for the Webis Web Archiver.
+
+If you use the archiver, please cite [the paper that describes it in detail](https://webis.de/publications.html?q=webis-web-archive#stein_2018y).
 
 Quickstart
 ----------
