@@ -32,7 +32,3 @@ Custom user simulation scripts
         script = de.webis.webarchive.environment.scripts.ScrollDownScript
   - When running archive.sh or reproduce.sh, specify the directory that contains the new directory with "--scriptsdirectory" and give the script name (as in the new directory) with "--script".
 
-
-Building
---------
-Coming soon

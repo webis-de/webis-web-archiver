@@ -2,7 +2,13 @@ package de.webis.webarchive.environment.browsers;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.UncheckedIOException;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -10,6 +16,8 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.CharUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -46,16 +54,72 @@ public class Windows {
 
   // GETTERS
   
-  public static String getHTML(final WebDriver window) {
+  public static String getCharset(final WebDriver window) {
+    try {
+      final String charset =
+          Windows.execute(window, "return document.characterSet;").toString();
+      if (charset == null) {
+        return "UTF-8";
+      } else {
+        return charset;
+      }
+    } catch (final Exception e) {
+      return "UTF-8";
+    }
+  }
+  
+  public static String getDom(final WebDriver window) {
     return Windows.execute(window, "return document.documentElement.outerHTML;")
         .toString();
   }
   
-  public static String writeHTML(final WebDriver window, final Path file)
+  public static String writeElements(
+      final WebDriver window, final Path file)
   throws IOException {
-    final String html = Windows.getHTML(window);
-    Files.write(file, html.getBytes());
+    final String elements = Windows.getElements(window);
+    final String charset = Windows.getCharset(window);
+    try (final Writer writer = new OutputStreamWriter(new FileOutputStream(
+        file.toFile()), charset)) {
+      writer.write(elements);
+    }
+    return elements;
+  }
+  
+  public static String writeSource(final WebDriver window, final Path file)
+  throws IOException {
+    final String html = window.getPageSource();
+    final String charset = Windows.getCharset(window);
+    try (final Writer writer = new OutputStreamWriter(new FileOutputStream(
+        file.toFile()), charset)) {
+      writer.write(html);
+    }
     return html;
+  }
+  
+  public static String writeDom(final WebDriver window, final Path file)
+  throws IOException {
+    final String html = Windows.getDom(window);
+    final String charset = Windows.getCharset(window);
+    try (final Writer writer = new OutputStreamWriter(new FileOutputStream(
+        file.toFile()), charset)) {
+      writer.write(html);
+    }
+    return html;
+  }
+
+  public static String encodeUnicodeToEntities(final String string) {
+    final StringBuilder encoded = new StringBuilder();
+    for (int i = 0; i < string.length(); i++) {
+      final char character = string.charAt(i);
+      if (CharUtils.isAscii(character)) {
+        encoded.append(character);
+      } else {
+        encoded.append(
+            String.format("&#x%x;",
+                Character.codePointAt(string, i)));
+      }
+    }
+    return encoded.toString();
   }
   
   public static int[] getBackgroundColor(final WebDriver window) {
@@ -202,6 +266,25 @@ public class Windows {
     }
 
     return maxTimesScrolled;
+  }
+  
+  //////////////////////////////////////////////////////////////////////////////
+  // HELPER CLASSES
+  //////////////////////////////////////////////////////////////////////////////
+  
+  private static final String JAVASCRIPT_GET_ELEMENTS =
+      Windows.readCode("get-elements.js");
+  
+  public static String getElements(final WebDriver window) {
+    return Windows.execute(window, JAVASCRIPT_GET_ELEMENTS).toString();
+  }
+  
+  protected static String readCode(final String filename) {
+    try (final InputStream input = Windows.class.getResourceAsStream(filename)) {
+      return IOUtils.toString(input, Charset.forName("UTF-8"));
+    } catch (final IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
 }

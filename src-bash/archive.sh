@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 OPTS=$(getopt --name $(basename $0) --options u:o:s:v:d: --longoptions url:,output:,script:,scriptversion:,scriptsdirectory: -- $@)
 if [[ $? -ne 0 ]]; then
@@ -25,7 +25,7 @@ while true;do
       shift 2
       ;;
     -d|--scriptsdirectory)
-      scriptsdirectory="--volume $(realpath $2):/resources/scripts/:ro"
+      scriptsdirectory="--volume $(readlink -f -- $2):/resources/scripts/:ro"
       shift 2
       ;;
     --)
@@ -56,16 +56,16 @@ if [ \( -z "$url" \) -o \( -z "$output" \) ];then
 fi
 
 mkdir -p $output
-output=$(realpath $output)
+output=$(readlink -f -- $output)
 warcs=$output/archive
 mkdir -p $warcs # Creating directory is required to give web-archiver user permission to write
 
-maindir=$(realpath $(dirname $0)/..)
+maindir=$(readlink -f -- $(dirname $0)/..)
 
 is_in_docker_group=$(groups | sed 's/ /\n/g' | grep '^docker$' | wc -l)
 
 # Mounting /dev/shm is required for taking big screenshot in chrome
-command="docker run --rm --user $(id -u) --env URL=\"$url\" --env DBUS_SESSION_BUS_ADDRESS=/dev/null $script $scriptversion $scriptsdirectory --volume $warcs:/warcs --volume $output:/output/ --volume /dev/shm/:/dev/shm -a stdout -a stderr webis/web-archive-environment:1.0.0"
+command="docker run --rm --user $(id -u) --env URL=\"$url\" --env DBUS_SESSION_BUS_ADDRESS=/dev/null $script $scriptversion $scriptsdirectory --volume $warcs:/warcs --volume $output:/output/ --volume /dev/shm/:/dev/shm -a stdout -a stderr webis/web-archive-environment:1.2.1"
 if [ $is_in_docker_group -eq 0 ];then
   sudo $command
 else

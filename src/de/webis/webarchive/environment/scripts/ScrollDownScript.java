@@ -25,7 +25,7 @@ public class ScrollDownScript extends InteractionScript {
   
   public static final String NAME = "scroll-down";
   
-  public static final Version VERSION = new Version(1, 0, 0);
+  public static final Version VERSION = new Version(1, 1, 0);
   
   //////////////////////////////////////////////////////////////////////////////
   // CONSTRUCTORS
@@ -80,10 +80,14 @@ public class ScrollDownScript extends InteractionScript {
   protected void saveSnapshot(final Browser browser, final WebDriver window,
       final Path outputDirectory)
   throws IOException {
-    LOG.info("Writing HTML");
-    Windows.writeHTML(window, outputDirectory.resolve("page.html"));
+    LOG.info("Writing source");
+    Windows.writeSource(window, outputDirectory.resolve("source.html"));
+    LOG.info("Writing DOM");
+    Windows.writeDom(window, outputDirectory.resolve("page.html"));
     LOG.info("Taking screenshot");
     Windows.screenshotPng(window, outputDirectory.resolve("page.png"));
+    LOG.info("Writing elements");
+    Windows.writeElements(window, outputDirectory.resolve("elements.txt"));
   }
 
 }
