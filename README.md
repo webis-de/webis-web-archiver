@@ -8,7 +8,7 @@ Quickstart
 ----------
 You need to have [Docker](https://www.docker.com/) installed.
 
-Then, on a Unix machine:
+Then, on a Linux machine:
   - run src-bash/archive.sh for archiving web pages. It will display usage hints.
   - run src-bash/reproduce.sh for reproducing from an archive. It will display usage hints.
 
