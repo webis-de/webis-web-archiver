@@ -32,5 +32,6 @@ Custom user simulation scripts
     where you replace "packages.of.your.ScriptClass" accordingly. For the example ScrollDownScript, that would be
     
         script = de.webis.webarchive.environment.scripts.ScrollDownScript
+  - The [src-bash/compile-scroll-down-script.sh](src-bash/compile-scroll-down-script.sh) illustrates the complete compilation process for the ScrollDownScript. Adapt it for your own script.
   - When running archive.sh or reproduce.sh, specify the directory that contains the new directory with "--scriptsdirectory" and give the script name (as in the new directory) with "--script".
 

@@ -1,0 +1,5 @@
+*.class
+webis-web-archiver.jar
+/build
+/scripts
+/output
