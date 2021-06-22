@@ -126,7 +126,7 @@ public class ScrollDownScriptMinHeight extends InteractionScript {
     LOG.info("Taking screenshot");
     Windows.screenshotPng(window, outputDirectory.resolve("page.png"));
     LOG.info("Writing elements and css");
-    writeElementsAndCss(window, outputDirectory.resolve("elements.txt"));
+    writeElementsAndCss(window, outputDirectory.resolve("elements.jsonl"));
   }
 
 }

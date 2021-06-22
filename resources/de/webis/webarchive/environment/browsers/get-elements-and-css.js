@@ -21,7 +21,11 @@ function addNode(id, path, xmin, ymin, xmax, ymax, text, css) {
 
 function getCss(element) {
   const styles = window.getComputedStyle(element);
-  const css = Array.from(styles).map(name => [name, styles.getPropertyValue(name)]);
+  const cssArray = Array.from(styles).map(name => [name, styles.getPropertyValue(name)]);
+  var css = {};
+  cssArray.forEach(function(data){
+    css[data[0]] = data[1]
+  });
   return css;
 }
 
@@ -75,4 +79,4 @@ function traverse(node, parentPath, nodeName, nodeNameNumber, recursive) {
 }
 
 traverse(document.getElementsByTagName("body")[0], "/HTML[1]", "BODY", 1, true);
- return ("\{\"elements:\"" + nodes.join("\n") + "\}");
+ return (nodes.join("\n"));
