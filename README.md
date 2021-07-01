@@ -2,13 +2,13 @@ webis-web-archiver
 ==================
 Source code and scripts for the Webis Web Archiver.
 
-If you use the archiver, please cite [the paper that describes it in detail](https://webis.de/publications.html?q=webis-web-archive#stein_2018y).
+If you use the archiver, please cite [the paper that describes it in detail](https://webis.de/publications.html?q=webis-web-archive#kiesel_2018c).
 
 Quickstart
 ----------
 You need to have [Docker](https://www.docker.com/) installed.
 
-Then, on a Linux machine:
+Then, on a Unix machine:
   - run src-bash/archive.sh for archiving web pages. It will display usage hints.
   - run src-bash/reproduce.sh for reproducing from an archive. It will display usage hints.
 
