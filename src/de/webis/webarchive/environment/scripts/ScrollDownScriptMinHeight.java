@@ -83,8 +83,8 @@ public class ScrollDownScriptMinHeight extends InteractionScript {
     LOG.info("Scrolled down to " + scrollPosition + "/" + scrollHeight);
     
     Windows.scrollToTop(window);
-    LOG.info("Resize viewport height to " + scrollHeight);
-    Windows.resizeViewportHeight(window, scrollHeight);
+    LOG.info("Resize viewport height to " + scrollPosition)
+    Windows.resizeViewportHeight(window, scrollPosition) // scrollposition limits height
     browser.waitForQuiescence(quietPeriodInSeconds, waitTimeoutInSeconds);
   }
   
