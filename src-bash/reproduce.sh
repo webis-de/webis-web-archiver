@@ -76,7 +76,7 @@ is_in_docker_group=$(groups | sed 's/ /\n/g' | grep '^docker$' | wc -l)
 
 # Mounting /dev/shm is required for taking big screenshot in chrome
 # /warcs/ can not be mounted read-only for warcprox mode (which does, however, not change anything, but tests that it could write on startup)
-command="docker run --rm --user $(id -u) --env URL=\"$url\" --env DBUS_SESSION_BUS_ADDRESS=/dev/null --env MODE="reproduce$mode" $script $scriptversion $scriptsdirectory --volume $archive:/warcs/ --volume $output:/output/ --volume /dev/shm/:/dev/shm -a stdout -a stderr webis/web-archive-environment:1.2.1"
+command="docker run --init --rm --user $(id -u) --env URL=\"$url\" --env DBUS_SESSION_BUS_ADDRESS=/dev/null --env MODE="reproduce$mode" $script $scriptversion $scriptsdirectory --volume $archive:/warcs/ --volume $output:/output/ --volume /dev/shm/:/dev/shm -a stdout -a stderr webis/web-archive-environment:1.2.1"
 if [ $is_in_docker_group -eq 0 ];then
   sudo $command
 else
