@@ -65,7 +65,7 @@ public class ScrollDownScriptMinHeight extends InteractionScript {
     browser.waitForQuiescence(quietPeriodInSeconds, waitTimeoutInSeconds);
 
     // Enough to reach "click for more"-button of google image search
-    final int maxScrollings = 25;
+    final int maxScrollings = 24;
     for (int scrollings = 0; scrollings < maxScrollings; ++scrollings) {
       final int scrollPosition = Math.max(Windows.getScrollYPosition(window),663);
       final int scrollHeight = Windows.getScrollHeight(window);
