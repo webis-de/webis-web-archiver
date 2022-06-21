@@ -1,3 +1,5 @@
+Note: development continues as [scriptor](https://github.com/webis-de/scriptor).
+
 webis-web-archiver
 ==================
 Source code and scripts for the Webis Web Archiver.
